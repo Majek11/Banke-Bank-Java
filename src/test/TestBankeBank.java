@@ -174,4 +174,5 @@ public class TestBankeBank {
         assertThrows(IllegalArgumentException.class, () -> bank.getBalance("abc", "1234"),
                 "Should throw exception for invalid account number format");
     }
+
 }
