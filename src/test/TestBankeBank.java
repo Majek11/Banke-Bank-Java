@@ -138,4 +138,40 @@ public class TestBankeBank {
         boolean result = bank.closeAccount(accountNumber,"1234");
         assertTrue(result, "Account should be deleted");
     }
+
+    @Test
+    @DisplayName("Test to check that user can check account balance")
+    public  void testCheckBalance() {
+        BankeBank bank = new BankeBank();
+        String accountNumber = bank.createAccount("John", "Doe", "1234");
+        bank.deposit(accountNumber, "1234", 100.0);
+        double balance = bank.getBalance(accountNumber, "1234");
+        assertEquals(100.0, balance, "Balance should be 100.0 after deposit");
+    }
+
+    @Test
+    @DisplayName("Test to check balance with wrong PIN")
+    public void testCheckBalanceWithWrongPin() {
+        BankeBank bank = new BankeBank();
+        String accountNumber = bank.createAccount("John", "Doe", "1234");
+        bank.deposit(accountNumber, "1234", 100.0);
+        assertThrows(IllegalArgumentException.class, () -> bank.getBalance(accountNumber, "123"));
+    }
+
+    @Test
+    @DisplayName("Test to check balance for non-existing account")
+    public void testCheckBalanceWithWrongAccountNumber() {
+        BankeBank bank = new BankeBank();
+        assertThrows(IllegalArgumentException.class, () -> bank.getBalance("1234", "1234"),
+            "Should throw exception for non-existing account"
+        );
+    }
+
+    @Test
+    @DisplayName("Test to check balance with invalid account number format")
+    public void testCheckBalanceInvalidFormat() {
+        BankeBank bank = new BankeBank();
+        assertThrows(IllegalArgumentException.class, () -> bank.getBalance("abc", "1234"),
+                "Should throw exception for invalid account number format");
+    }
 }

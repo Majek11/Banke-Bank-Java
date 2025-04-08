@@ -54,6 +54,14 @@ public class BankeBank {
         return false;
     }
 
+    public double getBalance(String accountNumber, String pin) {
+        BankeAccount account = bankeBankAccounts.get(accountNumber);
+        if (account == null || !account.getPin().equals(pin)) {
+            throw new IllegalArgumentException("Invalid account number or pin");
+        }
+        return account.getBalance();
+    }
+
     public static void main(String[] args) {
             BankeBank bank = new BankeBank();
             String accountNumber = bank.createAccount("John", "Doe", "1234");
