@@ -32,16 +32,23 @@ public class BankeAccount {
         return pin;
     }
 
-    public double getBalance(double amount) {
-        if (amount <= 0) {
-            return 0;
-        }
-
-        balance += amount;
-        return balance;
+    public double getBalance() {
+       return balance;
     }
 
     public boolean deposit(double amount) {
-        return getBalance(amount) > 0;
+            if (amount > 0) {
+                balance += amount;
+                return true;
+            }
+            return false;
+    }
+
+    public boolean withdraw(double amount) {
+        if (amount >  0 && balance >= amount) {
+            balance -= amount;
+            return true;
+        }
+        return false;
     }
 }
