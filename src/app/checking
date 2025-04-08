@@ -1,0 +1,41 @@
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class BankTest {
+
+    @Test
+    public void testSuccessfulAccountCreation() {
+        Bank bank = new Bank(); // Create a new Bank for this test
+        String accountNumber = bank.createAccount("John", "Doe", "1234");
+        assertNotNull(accountNumber, "Account number should not be null");
+        assertTrue(accountNumber.matches("\\d+"), "Account number should be numeric");
+    }
+
+    @Test
+    public void testEmptyFirstName() {
+        Bank bank = new Bank(); // New Bank instance
+        String accountNumber = bank.createAccount("", "Doe", "1234");
+        assertNull(accountNumber, "Should return null for empty first name");
+    }
+
+    @Test
+    public void testEmptyLastName() {
+        Bank bank = new Bank(); // New Bank instance
+        String accountNumber = bank.createAccount("John", "", "1234");
+        assertNull(accountNumber, "Should return null for empty last name");
+    }
+
+    @Test
+    public void testPinNotFourDigits() {
+        Bank bank = new Bank(); // New Bank instance
+        String accountNumber = bank.createAccount("John", "Doe", "12");
+        assertNull(accountNumber, "Should return null for PIN not 4 digits");
+    }
+
+    @Test
+    public void testPinNotNumeric() {
+        Bank bank = new Bank(); // New Bank instance
+        String accountNumber = bank.createAccount("John", "Doe", "12ab");
+        assertNull(accountNumber, "Should return null for non-numeric PIN");
+    }
+}
