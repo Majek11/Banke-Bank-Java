@@ -1,19 +1,68 @@
 package test;
 
-import app.BankeAccount;
+import app.BankeBank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class TestBankeBank {
 
     @Test
     @DisplayName("Test to check successful account creation")
     public void testCreateAccount() {
-        BankeAccount bank = new BankeAccount();
+        BankeBank bank = new BankeBank();
         String accountNumber = bank.createAccount("John", "Doe", "1234");
         assertNotNull(accountNumber, "Account number should not be null");
+    }
+
+    @Test
+    @DisplayName("Test to check if first name is empty")
+    public void testCreateAccountWithEmptyFirstName() {
+        BankeBank bank = new BankeBank();
+        String accountNumber = bank.createAccount("", "Doe", "1234");
+        assertNull(accountNumber, "Account should return null if first name is empty");
+    }
+
+    @Test
+    @DisplayName("Test to check if last name is empty")
+    public void testCreateAccountWithEmptyLastName() {
+        BankeBank bank = new BankeBank();
+        String accountNumber = bank.createAccount("John", "", "1234");
+        assertNull(accountNumber, "Account should return null if last name is empty");
+    }
+
+    @Test
+    @DisplayName("Test to check if pin is not 4 digits")
+    public void testPinNotFourDigits() {
+        BankeBank bank = new BankeBank();
+        String accountNumber = bank.createAccount("John", "Doe", "123");
+        assertNull(accountNumber, "Account should return null if pin is not 4 digits");
+    }
+
+    @Test
+    @DisplayName("Test to check if pin is empty")
+    public void testPinEmpty() {
+        BankeBank bank = new BankeBank();
+        String accountNumber = bank.createAccount("John", "Doe", "");
+        assertNull(accountNumber, "Account should return null if pin is empty");
+    }
+
+    @Test
+    @DisplayName("Test to check if pin is not numeric")
+    public void testPinNotNumeric() {
+        BankeBank bank = new BankeBank();
+        String accountNumber = bank.createAccount("John", "Doe", "12abc");
+        assertNull(accountNumber, "Account should return null if pin is not numeric");
+    }
+
+    @Test
+    @DisplayName("Test to check if pin has leading/trailing spaces")
+    public void testPinWithSpaces() {
+        BankeBank bank = new BankeBank();
+        String accountNumber = bank.createAccount("John", "Doe", " 1234 ");
+        assertNull(accountNumber, "Account should return null if pin has leading/trailing spaces");
     }
 
 }
