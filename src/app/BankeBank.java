@@ -27,6 +27,16 @@ public class BankeBank {
         return pin.length() == 4;
     }
 
+    public boolean deposit(String accountNumber, double amount) {
+        BankeAccount account = bankeBankAccounts.get(accountNumber);
+        if (account == null) {
+            return false; // Account not found
+        }
+        return account.deposit(amount); // Call deposit on the account
+    }
+
+
+
     public static void main(String[] args) {
 
     }

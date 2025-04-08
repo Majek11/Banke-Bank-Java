@@ -4,8 +4,7 @@ import app.BankeBank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestBankeBank {
 
@@ -65,4 +64,38 @@ public class TestBankeBank {
         assertNull(accountNumber, "Account should return null if pin has leading/trailing spaces");
     }
 
+    @Test
+    @DisplayName("Test to check if user can deposit money")
+    public void testDepositMoney() {
+        BankeBank bank = new BankeBank();
+        String accountNumber = bank.createAccount("John", "Doe", "1234");
+        boolean result = bank.deposit(accountNumber, 100.0);
+        assertTrue(result,"Deposit should be be successful");
+    }
+
+    @Test
+    @DisplayName("Test to check if user can not deposit negative money")
+    public void testDepositNegativeMoney() {
+        BankeBank bank = new BankeBank();
+        String accountNumber = bank.createAccount("John", "Doe", "1234");
+        boolean result = bank.deposit(accountNumber, -100.0);
+        assertFalse(result,"Deposit should not be be successful");
+    }
+
+    @Test
+    @DisplayName("Test to check if user can not deposit zero money")
+    public void testDepositZeroMoney() {
+        BankeBank bank = new BankeBank();
+        String accountNumber = bank.createAccount("John", "Doe", "1234");
+        boolean result = bank.deposit(accountNumber, 0.0);
+    }
+
+    @Test
+    @DisplayName("Test to check if user can not deposit money to non existing account")
+    public void testDepositToNonExistingAccount() {
+        BankeBank bank = new BankeBank();
+        String accountNumber = bank.createAccount("John", "Doe", "1234");
+        boolean result = bank.deposit("invalidAccount", 100.0);
+        assertFalse(result,"Deposit should not be be successful");
+    }
 }
