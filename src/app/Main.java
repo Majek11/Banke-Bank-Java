@@ -51,62 +51,6 @@ public class Main {
                 }
             }
         }
-
-
-//        do {
-//            System.out.println("\nOptions:");
-//            System.out.println("1. Deposit money");
-//            System.out.println("2. Withdraw money");
-//            System.out.println("3. Check balance");
-//            System.out.println("4. Close account");
-//            System.out.println("5. Log out");
-//            System.out.print("Enter your choice (1-5): ");
-//            choice = userInputCollector.nextLine();
-//
-//            switch (choice) {
-//                case "1":
-//                    System.out.print("Enter amount to deposit");
-//                    double depositAmount = Double.parseDouble(userInputCollector.nextLine());
-//                    if ( bank.deposit(accountNumber, pin, depositAmount)) {
-//                        System.out.println("Deposit successful!");
-//                    } else {
-//                        System.out.println("Deposit failed. Amount must be positive");
-//                        break;
-//                    }
-//
-//                case "2":
-//                    System.out.print("Enter amount to withdraw: ");
-//                    double withdrawAmount = Double.parseDouble(userInputCollector.nextLine());
-//                    if (bank.withdraw(accountNumber, pin, withdrawAmount)) {
-//                        System.out.println("Withdraw successful!");
-//                    } else {
-//                        System.out.println("Withdraw failed. Check account number, PIN, or amount.");
-//                        break;
-//                    }
-//
-//                case "3":
-//                    double balance = bank.getBalance(accountNumber, pin);
-//                    System.out.println("Your balance is: " + balance);
-//                    break;
-//
-//                case "4":
-//                   if (bank.closeAccount(accountNumber, pin)) {
-//                       System.out.println("Account closed successfully!");
-//                       accountNumber = null;
-//                       choice = "5";
-//                   } else {
-//                       System.out.println("Failed to close account. Check account number and PIN.");
-//                   }
-//
-//                case "5":
-//                    System.out.println("You are now logged out.");
-//
-//                default:
-//                    System.out.println("Invalid choice. Please enter 1-5.");
-//            }
-//        } while (!choice.equals("5"));
-//    }
-
         do {
             System.out.println("\nOptions:");
             System.out.println("1. Deposit money");
@@ -147,7 +91,7 @@ public class Main {
                     if (bank.closeAccount(accountNumber, pin)) {
                         System.out.println("Account closed successfully! Logging out...");
                         accountNumber = null;
-                        choice = "5"; // Exit menu
+                        choice = "5";
                     } else {
                         System.out.println("Failed to close account.");
                     }
