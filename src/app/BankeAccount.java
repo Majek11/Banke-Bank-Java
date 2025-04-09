@@ -4,7 +4,7 @@ public class BankeAccount {
     private String accountNumber;
     private String firstName;
     private String lastName;
-    private String pin;
+    String pin;
     private double balance;
 
 

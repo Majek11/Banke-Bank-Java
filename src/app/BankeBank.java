@@ -73,4 +73,21 @@ public class BankeBank {
         destination.deposit(amount);
         return true;
     }
+
+    public boolean changePin(String accountNumber, String oldPin, String newPin) {
+        BankeAccount account = bankeBankAccounts.get(accountNumber);
+        if (account == null || !account.getPin().equals(oldPin)) {
+            return false;
+        }
+        if (newPin == null || newPin.length() != 4) {
+            return false;
+        }
+        try {
+            Integer.parseInt(newPin);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        account.pin = newPin;
+        return true;
+    }
 }

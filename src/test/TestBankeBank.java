@@ -225,4 +225,39 @@ public class TestBankeBank {
         assertEquals(0.0, bank.getBalance(account2, "5678"), "Destination account should have 0.0");
     }
 
+    @Test
+    @DisplayName("Test to check successful PIN change")
+    public void testChangePinSuccess() {
+        BankeBank bank = new BankeBank();
+        String account = bank.createAccount("John", "Doe", "1234");
+        boolean result = bank.changePin(account, "1234", "5678");
+        assertTrue(result, "PIN change should be successful");
+        assertEquals(0.0, bank.getBalance(account, "5678"), "New PIN should work"); // Verify new PIN
+    }
+
+    @Test
+    @DisplayName("Test to check PIN change with wrong old PIN")
+    public void testChangePinWrongOldPin() {
+        BankeBank bank = new BankeBank();
+        String account = bank.createAccount("John", "Doe", "1234");
+        boolean result = bank.changePin(account, "9999", "5678");
+        assertFalse(result, "PIN change should fail with wrong old PIN");
+    }
+
+    @Test
+    @DisplayName("Test to check PIN change with invalid new PIN")
+    public void testChangePinInvalidNewPin() {
+        BankeBank bank = new BankeBank();
+        String account = bank.createAccount("John", "Doe", "1234");
+        boolean result = bank.changePin(account, "1234", "abc"); // Not numeric
+        assertFalse(result, "PIN change should fail with invalid new PIN");
+    }
+
+
+
+
+
+
 }
+
+

@@ -57,8 +57,10 @@ public class Main {
             System.out.println("2. Withdraw money");
             System.out.println("3. Check balance");
             System.out.println("4. Close account");
-            System.out.println("5. Log out");
-            System.out.print("Enter your choice (1-5): ");
+            System.out.println("5. Transfer money");
+            System.out.println("6. Change PIN");
+            System.out.println("7. Log out");
+            System.out.print("Enter your choice (1-7): ");
             choice = userInputCollector.nextLine();
 
             switch (choice) {
@@ -91,22 +93,47 @@ public class Main {
                     if (bank.closeAccount(accountNumber, pin)) {
                         System.out.println("Account closed successfully! Logging out...");
                         accountNumber = null;
-                        choice = "5";
+                        choice = "7";
                     } else {
                         System.out.println("Failed to close account.");
                     }
                     break;
 
                 case "5":
+                    System.out.print("Enter destination account number: ");
+                    String toAccount = userInputCollector.nextLine();
+                    System.out.print("Enter amount to transfer: ");
+                    double transferAmount = Double.parseDouble(userInputCollector.nextLine());
+                    if (bank.transfer(accountNumber, pin, toAccount, transferAmount)) {
+                        System.out.println("Transfer successful!");
+                    } else {
+                        System.out.println("Transfer failed. Check balance, amount, or destination account.");
+                    }
+                    break;
+
+                case "6":
+                    System.out.print("Enter current PIN: ");
+                    String oldPin = userInputCollector.nextLine();
+                    System.out.print("Enter new 4-digit PIN: ");
+                    String newPin = userInputCollector.nextLine();
+                    if (bank.changePin(accountNumber, oldPin, newPin)) {
+                        pin = newPin;
+                        System.out.println("PIN changed successfully!");
+                    } else {
+                        System.out.println("PIN change failed. Check current PIN or ensure new PIN is 4 digits.");
+                    }
+                    break;
+
+                case "7":
                     System.out.println("Logging out...");
                     break;
 
                 default:
-                    System.out.println("Invalid choice. Please enter 1-5.");
+                    System.out.println("Invalid choice. Please enter 1-7.");
             }
-        } while (!choice.equals("5"));
+        } while (!choice.equals("7"));
 
-        System.out.println("Goodbye!");
+        System.out.println("Thank you for banking with us!");
 
 }
 }
