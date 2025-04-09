@@ -175,4 +175,54 @@ public class TestBankeBank {
                 "Should throw exception for invalid account number format");
     }
 
+    @Test
+    @DisplayName("Test to check successful transfer between accounts")
+    public void testTransferSuccess() {
+        BankeBank bank = new BankeBank();
+        String account1 = bank.createAccount("John", "Doe", "1234");
+        String account2 = bank.createAccount("Jane", "Smith", "5678");
+        bank.deposit(account1, "1234", 200.0);
+        boolean result = bank.transfer(account1, "1234", account2, 100.0);
+        assertTrue(result, "Transfer should be successful");
+        assertEquals(100.0, bank.getBalance(account1, "1234"), "Source account should have 100.0 left");
+        assertEquals(100.0, bank.getBalance(account2, "5678"), "Destination account should have 100.0");
+    }
+
+    @Test
+    @DisplayName("Test to check transfer with insufficient funds")
+    public void testTransferInsufficientFunds() {
+        BankeBank bank = new BankeBank();
+        String account1 = bank.createAccount("John", "Doe", "1234");
+        String account2 = bank.createAccount("Jane", "Smith", "5678");
+        bank.deposit(account1, "1234", 200.0);
+        boolean result = bank.transfer(account1, "1234", account2, 300.0);
+        assertFalse(result, "Transfer should not be successful");
+        assertEquals(200.0, bank.getBalance(account1, "1234"), "Source account should have 200.0 left");
+        assertEquals(0.0, bank.getBalance(account2, "5678"), "Destination account should have 0.0");
+    }
+
+    @Test
+    @DisplayName("Test to check transfer to non-existing account")
+    public void testTransferToNonExistingAccount() {
+        BankeBank bank = new BankeBank();
+        String account1 = bank.createAccount("John", "Doe", "1234");
+        bank.deposit(account1, "1234", 200.0);
+        boolean result = bank.transfer(account1, "1234", "9999", 100.0);
+        assertFalse(result, "Transfer should not be successful for non-existing account");
+        assertEquals(200.0, bank.getBalance(account1, "1234"), "Source account should have 200.0 left");
+    }
+
+    @Test
+    @DisplayName("Test to check transfer with wrong PIN")
+    public void testTransferWithWrongPin() {
+        BankeBank bank = new BankeBank();
+        String account1 = bank.createAccount("John", "Doe", "1234");
+        String account2 = bank.createAccount("Jane", "Smith", "5678");
+        bank.deposit(account1, "1234", 200.0);
+        boolean result = bank.transfer(account1, "1253", account2, 100.0);
+        assertFalse(result, "Transfer should not be successful for wrong PIN");
+        assertEquals(200.0, bank.getBalance(account1, "1234"), "Source account should have 200.0 left");
+        assertEquals(0.0, bank.getBalance(account2, "5678"), "Destination account should have 0.0");
+    }
+
 }
